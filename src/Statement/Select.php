@@ -259,6 +259,20 @@ class Select extends AdvancedStatement implements SelectInterface
     public function getValues(): array
     {
         $values = [];
+        $table = $this->table;
+
+        foreach ($this->columns as $column) {
+            if ($column instanceof QueryInterface) {
+                $values = array_merge($values, $column->getValues());
+            }
+        }
+        if (is_array($this->table)) {
+            $table = reset($this->table);
+        }
+        if ($table instanceof QueryInterface) {
+            $values = array_merge($values, $table->getValues());
+        }
+
         foreach ($this->join as $join) {
             $values = array_merge($values, $join->getValues());
         }

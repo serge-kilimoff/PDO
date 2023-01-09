@@ -56,7 +56,7 @@ abstract class AdvancedStatement extends AbstractStatement implements AdvancedSt
      *
      * @return self
      */
-    public function where(ConditionalInterface $clause): self
+    public function where($clause): self
     {
         $this->where = $clause;
 
@@ -69,7 +69,7 @@ abstract class AdvancedStatement extends AbstractStatement implements AdvancedSt
     protected function renderWhere(): string
     {
         $sql = '';
-        if ($this->where !== null) {
+        if (!empty($this->where)) {
             $sql = " WHERE {$this->where}";
         }
 
